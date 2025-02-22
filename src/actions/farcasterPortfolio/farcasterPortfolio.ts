@@ -11,6 +11,7 @@ import {
 } from "@elizaos/core";
 import examples from "./examples";
 import { formatFarcasterData, getZapperHeaders } from "../../utils";
+import { validateZapperConfig } from "../../environment";
 
 export const farcasterPortfolioAction: Action = {
     name: "FARCASTER_PORTFOLIO",
@@ -46,10 +47,11 @@ export const farcasterPortfolioAction: Action = {
                     }
                 }
             `;
-
+            const config = await validateZapperConfig(_runtime);
+            const headers = getZapperHeaders(config)
             const response = await fetch('https://public.zapper.xyz/graphql', {
                 method: 'POST',
-                headers: getZapperHeaders(),
+                headers: headers,
                 body: JSON.stringify({
                     query,
                     variables: {

@@ -34,11 +34,8 @@ var examples_default = [
 ];
 
 // src/utils.ts
-function getZapperHeaders() {
-  if (!process.env.ZAPPER_API_KEY) {
-    throw new Error("ZAPPER API key not found in environment variables. Make sure to set the ZAPPER_API_KEY environment variable.");
-  }
-  const encodedKey = btoa(process.env.ZAPPER_API_KEY);
+function getZapperHeaders(config) {
+  const encodedKey = btoa(config.ZAPPER_API_KEY);
   return {
     "Content-Type": "application/json",
     "Authorization": `Basic ${encodedKey}`
@@ -104,6 +101,27 @@ var formatFarcasterData = (data) => {
   return { addresses: allAddresses };
 };
 
+// src/environment.ts
+import { z } from "zod";
+var zapperEnvironmentSchema = z.object({
+  ZAPPER_API_KEY: z.string().min(1, "ZAPPER_API_KEY is required")
+});
+async function validateZapperConfig(runtime) {
+  try {
+    const config = {
+      ZAPPER_API_KEY: runtime.getSetting("ZAPPER_API_KEY") || process.env.ZAPPER_API_KEY
+    };
+    return zapperEnvironmentSchema.parse(config);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      const errorMessage = error.errors.map((e) => e.message).join("\n");
+      throw new Error(`Zapper Configuration Error:
+${errorMessage}`);
+    }
+    throw error;
+  }
+}
+
 // src/actions/portfolio/portfolio.ts
 var portfolioAction = {
   name: "ZAPPER_PORTFOLIO",
@@ -150,9 +168,11 @@ var portfolioAction = {
                     }
                 }
             `;
+      const config = await validateZapperConfig(_runtime);
+      const headers = getZapperHeaders(config);
       const response = await fetch("https://public.zapper.xyz/graphql", {
         method: "POST",
-        headers: getZapperHeaders(),
+        headers,
         body: JSON.stringify({
           query,
           variables: {
@@ -273,9 +293,11 @@ var farcasterPortfolioAction = {
                     }
                 }
             `;
+      const config = await validateZapperConfig(_runtime);
+      const headers = getZapperHeaders(config);
       const response = await fetch("https://public.zapper.xyz/graphql", {
         method: "POST",
-        headers: getZapperHeaders(),
+        headers,
         body: JSON.stringify({
           query,
           variables: {

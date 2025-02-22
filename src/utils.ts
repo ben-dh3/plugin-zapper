@@ -1,11 +1,8 @@
 import { ZapperPortfolioResponse, ZapperFarcasterResponse } from "./types";
+import { ZapperConfig } from './environment';
 
-export function getZapperHeaders() {
-    if (!process.env.ZAPPER_API_KEY) {
-        throw new Error("ZAPPER API key not found in environment variables. Make sure to set the ZAPPER_API_KEY environment variable.");
-    }
-    
-    const encodedKey = btoa(process.env.ZAPPER_API_KEY);
+export function getZapperHeaders(config: ZapperConfig) {
+    const encodedKey = btoa(config.ZAPPER_API_KEY);
     return {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedKey}`

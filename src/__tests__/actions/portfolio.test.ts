@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { portfolioAction } from '../../actions/portfolio/portfolio';
+import { ZapperConfig } from '../../environment';
 
 vi.mock('@elizaos/core', () => ({
     elizaLogger: {
@@ -12,10 +13,17 @@ vi.mock('@elizaos/core', () => ({
     }
 }));
 
+const mockConfig: ZapperConfig = {
+    ZAPPER_API_KEY: 'mock-api-key',
+};
+
 vi.mock('../../utils', () => ({
-    getZapperHeaders: vi.fn().mockReturnValue({
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic mock-encoded-key'
+    getZapperHeaders: vi.fn().mockImplementation(() => {
+        const encodedKey = btoa(mockConfig.ZAPPER_API_KEY);
+        return {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${encodedKey}`
+        };
     }),
     formatPortfolioData: vi.fn().mockReturnValue('Formatted portfolio data')
 }));
@@ -24,8 +32,15 @@ describe('Portfolio Action', () => {
     const mockRuntime = {
         messageManager: {
             createMemory: vi.fn().mockResolvedValue(undefined)
-        }
+        },
+        getSetting: vi.fn().mockImplementation((key) => {
+            if (key === "ZAPPER_API_KEY") {
+                return "mock-api-key";
+            }
+            return null;
+        })
     };
+    
 
     const mockMessage = {
         userId: 'user123',

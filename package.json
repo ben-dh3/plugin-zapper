@@ -21,7 +21,8 @@
     "dependencies": {
         "@elizaos/core": "latest",
         "sharp": "^0.33.5",
-        "tsup": "8.3.5"
+        "tsup": "8.3.5",
+        "zod": "^3.24.2"
     },
     "devDependencies": {
         "@types/node": "^20.0.0",

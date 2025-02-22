@@ -11,6 +11,7 @@ import {
 } from "@elizaos/core";
 import examples from "./examples";
 import { formatPortfolioData, getZapperHeaders } from "../../utils";
+import { validateZapperConfig } from "../../environment";
 export const portfolioAction: Action = {
     name: "ZAPPER_PORTFOLIO",
     description: "Get the portfolio from given address or addresses",
@@ -62,10 +63,11 @@ export const portfolioAction: Action = {
                     }
                 }
             `;
-
+            const config = await validateZapperConfig(_runtime);
+            const headers = getZapperHeaders(config)
             const response = await fetch('https://public.zapper.xyz/graphql', {
                 method: 'POST',
-                headers: getZapperHeaders(),
+                headers: headers,
                 body: JSON.stringify({
                     query,
                     variables: {
