@@ -1,5 +1,9 @@
 # @elizaos/plugin-zapper
 
+<div align="center">
+  <img src="images/banner.jpg" alt="Plugin Banner" width="100%">
+</div>
+
 A plugin for Eliza that allows users to fetch portfolio data using the Zapper API.
 
 ## Features
