@@ -20,6 +20,7 @@
     ],
     "dependencies": {
         "@elizaos/core": "latest",
+        "sharp": "^0.33.5",
         "tsup": "8.3.5"
     },
     "devDependencies": {
@@ -31,7 +32,7 @@
     "scripts": {
         "build": "tsup --format esm --dts",
         "dev": "tsup --format esm --dts --watch",
-        "test": "vitest run",
+        "test": "vitest --config vitest.config.ts",
         "test:watch": "vitest",
         "test:coverage": "vitest run --coverage"
     },
