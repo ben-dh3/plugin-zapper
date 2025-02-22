@@ -106,6 +106,18 @@ custodyAddress: string;
 };
 ```
 
+## Development Guide
+### Setting up the development environment
+1. Clone the repository.
+2. Install dependencies:
+```bash
+pnpm install
+```
+3. Build the plugin:
+```bash
+pnpm build
+```
+
 ## API Reference
 
 ### Environment Variables
