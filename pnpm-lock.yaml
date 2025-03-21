@@ -25,10 +25,10 @@ importers:
         version: 3.24.2
     devDependencies:
       '@types/node':
-        specifier: ^20.0.0
+        specifier: ^20.17.19
         version: 20.17.19
       '@vitest/coverage-v8':
-        specifier: ^3.0.5
+        specifier: ^3.0.6
         version: 3.0.6(vitest@3.0.5(@types/node@20.17.19)(yaml@2.7.0))
       typescript:
         specifier: 5.6.3
@@ -1541,8 +1541,8 @@ packages:
       openai:
         optional: true
 
-  langsmith@0.3.10:
-    resolution: {integrity: sha512-V6SnJhxKt9AbdVfl86OrEBl8uGwO0/WE2qqDcRXxHxzdCDnj+sV7nstr5VL0a6zxZmyMaw6eBbYwB4PTYKRvvQ==}
+  langsmith@0.3.14:
+    resolution: {integrity: sha512-MzoxdRkFFV/6140vpP5V2e2fkTG6x/0zIjw77bsRwAXEMjPRTUyDazfXeSyrS5uJvbLgxAXc+MF1h6vPWe6SXQ==}
     peerDependencies:
       openai: '*'
     peerDependenciesMeta:
@@ -2190,6 +2190,11 @@ packages:
 
   zod-to-json-schema@3.24.2:
     resolution: {integrity: sha512-pNUqrcSxuuB3/+jBbU8qKUbTbDqYUaG1vf5cXFjbhGgoUuA1amO/y4Q8lzfOhHU8HNPK6VFJ18lBDKj3OHyDsg==}
+    peerDependencies:
+      zod: ^3.24.1
+
+  zod-to-json-schema@3.24.5:
+    resolution: {integrity: sha512-/AuWwMP+YqiPbsJx5D6TfgRTc4kTLjsh5SOcd4bLsfUg2RcEXrFMJl1DGgdHy2aCfsIA/cr/1JM0xcB2GZji8g==}
     peerDependencies:
       zod: ^3.24.1
 
@@ -2969,13 +2974,13 @@ snapshots:
       camelcase: 6.3.0
       decamelize: 1.2.0
       js-tiktoken: 1.0.19
-      langsmith: 0.3.10(openai@4.82.0(zod@3.24.2))
+      langsmith: 0.3.14(openai@4.82.0(zod@3.24.2))
       mustache: 4.2.0
       p-queue: 6.6.2
       p-retry: 4.6.2
       uuid: 10.0.0
       zod: 3.24.2
-      zod-to-json-schema: 3.24.2(zod@3.24.2)
+      zod-to-json-schema: 3.24.5(zod@3.24.2)
     transitivePeerDependencies:
       - openai
 
@@ -3983,7 +3988,7 @@ snapshots:
     optionalDependencies:
       openai: 4.82.0(zod@3.24.2)
 
-  langsmith@0.3.10(openai@4.82.0(zod@3.24.2)):
+  langsmith@0.3.14(openai@4.82.0(zod@3.24.2)):
     dependencies:
       '@types/uuid': 10.0.0
       chalk: 4.1.2
@@ -4605,6 +4610,10 @@ snapshots:
   yaml@2.7.0: {}
 
   zod-to-json-schema@3.24.2(zod@3.24.2):
+    dependencies:
+      zod: 3.24.2
+
+  zod-to-json-schema@3.24.5(zod@3.24.2):
     dependencies:
       zod: 3.24.2
 
