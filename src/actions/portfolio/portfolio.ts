@@ -23,9 +23,9 @@ export const portfolioAction: Action = {
     handler: async (
         _runtime: IAgentRuntime,
         _message: Memory,
-        _state: State,
-        _options: { [key: string]: unknown },
-        _callback: HandlerCallback
+        _state: State | undefined,
+        _options: { [key: string]: unknown } | undefined,
+        _callback: HandlerCallback | undefined
     ): Promise<boolean> => {
         async function getZapperAssets(addresses: string[]) {
             const query = `
@@ -131,7 +131,9 @@ export const portfolioAction: Action = {
             };
 
             await _runtime.messageManager.createMemory(newMemory);
-            _callback(newMemory.content);
+            if (_callback) {
+                _callback(newMemory.content);
+            }
 
             return true;
         } catch (error) {

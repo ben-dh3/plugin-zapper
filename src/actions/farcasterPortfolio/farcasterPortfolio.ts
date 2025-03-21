@@ -24,9 +24,9 @@ export const farcasterPortfolioAction: Action = {
     handler: async (
         _runtime: IAgentRuntime,
         _message: Memory,
-        _state: State,
-        _options: { [key: string]: unknown },
-        _callback: HandlerCallback
+        _state: State | undefined,
+        _options: { [key: string]: unknown } | undefined,
+        _callback: HandlerCallback | undefined
     ): Promise<boolean> => {
         async function getFarcasterAddresses(username: string): Promise<{
             addresses: string[],
@@ -110,7 +110,9 @@ export const farcasterPortfolioAction: Action = {
             };
             
             await _runtime.messageManager.createMemory(newMemory);
-            _callback(newMemory.content);
+            if (_callback) {
+                _callback(newMemory.content);
+            }
             // Run the portfolio action with addresses found in Farcaster profiles
             await _runtime.processActions(newMemory, [newMemory], _state, _callback);
 
