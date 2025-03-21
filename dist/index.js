@@ -222,7 +222,9 @@ ${assetsInfo}`;
         }
       };
       await _runtime.messageManager.createMemory(newMemory);
-      _callback(newMemory.content);
+      if (_callback) {
+        _callback(newMemory.content);
+      }
       return true;
     } catch (error) {
       elizaLogger.error("Error in portfolioAction:", error);
@@ -345,7 +347,9 @@ var farcasterPortfolioAction = {
         }
       };
       await _runtime.messageManager.createMemory(newMemory);
-      _callback(newMemory.content);
+      if (_callback) {
+        _callback(newMemory.content);
+      }
       await _runtime.processActions(newMemory, [newMemory], _state, _callback);
       return true;
     } catch (error) {
